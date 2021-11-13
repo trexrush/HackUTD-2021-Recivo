@@ -17,8 +17,3 @@ CREATE TABLE items (
   price INT NOT NULL,
   istaxable BOOLEAN NOT NULL
 );
-
-INSERT INTO users (username, email, pass_word) VALUES
-  ('Aliko', 'Dangote', 'Billionaire Industrialist'),
-  ('Bill', 'Gates', 'Billionaire Tech Entrepreneur'),
-  ('Folrunsho', 'Alakija', 'Billionaire Oil Magnate');
