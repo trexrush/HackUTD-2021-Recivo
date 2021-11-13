@@ -8,5 +8,6 @@ import com.hackutd.fall2021.demo.entities.User;
 @Repository 
 
 public interface UserRepository extends CrudRepository<User, Long> {
-	
+	User findByUsername(String username);
+	User findByUsernameAndPassword(String username, String password);
 }

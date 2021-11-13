@@ -10,10 +10,4 @@ public class Response<T> {
 	private String status;
 	private String message;
 	private T data;
-	
-	public Response(String stat, String mesg, T data) {
-		status = stat;
-		message = mesg;
-		this.data = data;
-	}
 }

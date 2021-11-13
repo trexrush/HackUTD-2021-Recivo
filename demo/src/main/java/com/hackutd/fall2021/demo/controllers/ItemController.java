@@ -3,7 +3,7 @@ package com.hackutd.fall2021.demo.controllers;
 import org.springframework.web.bind.annotation.*;
 
 import com.hackutd.fall2021.demo.entities.User;
-import com.hackutd.fall2021.demo.repositories.UserRepository;
+import com.hackutd.fall2021.demo.repositories.ItemRepository;
 import com.hackutd.fall2021.demo.resources.Response;
 
 import java.util.Map;
@@ -12,11 +12,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 
 @RestController
-@RequestMapping ("/api/user")
+@RequestMapping ("/api/item")
 
-public class UserController {
+public class ItemController {
 	@Autowired
-	private UserRepository repository;
+	private ItemRepository repository;
 	
 	@PostMapping ("/new")
 	public Response createUser(@RequestBody User newUser) {
