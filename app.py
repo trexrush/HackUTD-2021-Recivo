@@ -16,3 +16,5 @@ def endpoint():
     # return a response
     return jsonify({'message': 'Image received. Check /images/receipt.jpg for your receipt.'})
 # TODO: implement receipt parsing, sort stringified receipt into dictionary with keys: date, price, quantity, and total
+
+
