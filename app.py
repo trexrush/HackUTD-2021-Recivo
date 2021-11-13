@@ -7,7 +7,7 @@ def index():
     return ('<p>Try /api/v1/endpoint next time.</p>')
 
 # route that receives a POST request containing an image
-@app.route('/api/v1/', methods=['POST'])
+@app.route('/api/v1/add', methods=['POST'])
 def endpoint():
     # get the image from the request
     receipt = request.files['image']
