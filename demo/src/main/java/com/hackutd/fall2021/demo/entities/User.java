@@ -12,9 +12,9 @@ public class User {
 	@Id
 	@GeneratedValue (strategy=GenerationType.AUTO)
 	private long user_id;
-	private String user;
+	private String username;
 	private String email;
-	private String password;
+	private String pass_word;
 	private int total;
 	
 	@OneToMany(mappedBy="user")
