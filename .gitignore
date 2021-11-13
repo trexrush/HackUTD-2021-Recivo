@@ -17,6 +17,10 @@
 
 # misc
 .DS_Store
+<<<<<<< Updated upstream
+=======
+*.pem
+>>>>>>> Stashed changes
 
 # debug
 npm-debug.log*
@@ -28,3 +32,12 @@ yarn-error.log*
 .env.development.local
 .env.test.local
 .env.production.local
+<<<<<<< Updated upstream
+=======
+
+# vercel
+.vercel
+
+# typescript
+*.tsbuildinfo
+>>>>>>> Stashed changes
