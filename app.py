@@ -36,6 +36,7 @@ def endpoint():
     words_arr.remove(words_arr[6])  
     words_arr.remove(words_arr[6])  
 
+
     date = words_arr[0]
 
         
