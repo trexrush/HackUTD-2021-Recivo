@@ -2,6 +2,8 @@ package com.hackutd.fall2021.demo.controllers;
 
 import org.springframework.web.bind.annotation.*;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hackutd.fall2021.demo.entities.*;
 import com.hackutd.fall2021.demo.repositories.*;
 import com.hackutd.fall2021.demo.resources.Response;
@@ -37,7 +39,9 @@ public class ReceiptController {
 				it.setReceipt(newReceipt);
 				items.save(it);
 			}
+			user.setTotal(user.getTotal() + newReceipt.getTotal());
 			receipts.save(newReceipt);
+			users.save(user);
 		}
 	}
 	@GetMapping("/getall")
@@ -82,9 +86,41 @@ public class ReceiptController {
 			beforeCal.set(Calendar.DATE, 31);
 			Date afterDate = afterCal.getTime();
 			Date beforeDate = beforeCal.getTime();
-			System.out.println(afterDate);
-			System.out.println(beforeDate);
-			return new Response(HttpStatus.OK.toString(), "", receipts.findByUserAndDateLessThanEqualAndDateGreaterThanEqual(userData, beforeDate, afterDate));
+			
+			Map<String, Integer> totalsByMonth = new HashMap<>();
+			for (int i = 0; i < 12; i++) {
+				switch (i) {
+					case 1: totalsByMonth.put("january", 0); break;
+					case 2: totalsByMonth.put("february", 0); break;
+					case 3: totalsByMonth.put("march", 0); break;
+					case 4: totalsByMonth.put("april", 0); break;
+					case 5: totalsByMonth.put("may", 0); break;
+					case 6: totalsByMonth.put("june", 0); break;
+					case 7: totalsByMonth.put("july", 0); break;
+					case 8: totalsByMonth.put("august", 0); break;
+					case 9: totalsByMonth.put("september", 0); break;
+					case 10: totalsByMonth.put("october", 0); break;
+					case 11: totalsByMonth.put("november", 0); break;
+					case 12: totalsByMonth.put("december", 0); break;	
+				}
+			}
+			for (Receipt r: receipts.findByUserAndDateLessThanEqualAndDateGreaterThanEqual(userData, beforeDate, afterDate)) {
+				switch(r.getDate().getMonth()) {
+					case Calendar.JANUARY: totalsByMonth.put("january", totalsByMonth.get("january") + r.getTotal()); break;
+					case Calendar.FEBRUARY: totalsByMonth.put("february", totalsByMonth.get("february") + r.getTotal()); break;
+					case Calendar.MARCH: totalsByMonth.put("march", totalsByMonth.get("march") + r.getTotal()); break;
+					case Calendar.APRIL: totalsByMonth.put("april", totalsByMonth.get("april") + r.getTotal()); break;
+					case Calendar.MAY: totalsByMonth.put("may", totalsByMonth.get("may") + r.getTotal()); break;
+					case Calendar.JUNE: totalsByMonth.put("june", totalsByMonth.get("june") + r.getTotal()); break;
+					case Calendar.JULY: totalsByMonth.put("july", totalsByMonth.get("july") + r.getTotal()); break;
+					case Calendar.AUGUST: totalsByMonth.put("august", totalsByMonth.get("august") + r.getTotal()); break;
+					case Calendar.SEPTEMBER: totalsByMonth.put("september", totalsByMonth.get("september") + r.getTotal()); break;
+					case Calendar.OCTOBER: totalsByMonth.put("october", totalsByMonth.get("october") + r.getTotal()); break;
+					case Calendar.NOVEMBER: totalsByMonth.put("november", totalsByMonth.get("november") + r.getTotal()); break;
+					case Calendar.DECEMBER: totalsByMonth.put("december", totalsByMonth.get("december") + r.getTotal()); break;
+				}
+			}
+			return new Response(HttpStatus.OK.toString(), "", totalsByMonth);
 		}
 		return new Response(HttpStatus.OK.toString(), "User not found", "");
 	}
