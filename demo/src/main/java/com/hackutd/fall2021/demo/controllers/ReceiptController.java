@@ -26,15 +26,18 @@ public class ReceiptController {
 	public void addReceipt(@RequestBody Receipt newReceipt, @PathVariable Long id) {
 		User user = users.findById(id).get();
 		if (user != null) {
+			newReceipt.getDate().setDate(newReceipt.getDate().getDate() + 1);
 			newReceipt.setUser(user);
 			receipts.save(newReceipt);
 			user.addReceipt(newReceipt);
 			users.save(user);
 			// CHECK
 			for (Item it: newReceipt.getItems()) {
+				newReceipt.setTotal(newReceipt.getTotal() + it.getPrice());
 				it.setReceipt(newReceipt);
 				items.save(it);
 			}
+			receipts.save(newReceipt);
 		}
 	}
 	@GetMapping("/getall")
@@ -57,6 +60,30 @@ public class ReceiptController {
 			beforeCal.set(Calendar.DATE, 31);
 			Date afterDate = afterCal.getTime();
 			Date beforeDate = beforeCal.getTime();
+			System.out.println(afterDate);
+			System.out.println(beforeDate);
+			return new Response(HttpStatus.OK.toString(), "", receipts.findByUserAndDateLessThanEqualAndDateGreaterThanEqual(userData, beforeDate, afterDate));
+		}
+		return new Response(HttpStatus.OK.toString(), "User not found", "");
+	}
+	@GetMapping("/byyear/{year}")
+	public Response getReceipt(@RequestBody User user, @PathVariable Integer year) {
+		User userData = users.findById(user.getUserId()).get();
+		if (userData != null) {
+			Calendar afterCal = Calendar.getInstance();
+			afterCal.clear();
+			afterCal.set(Calendar.MONTH, Calendar.JANUARY);
+			afterCal.set(Calendar.YEAR, year);
+			afterCal.set(Calendar.DATE, 1);
+			Calendar beforeCal = Calendar.getInstance();
+			beforeCal.clear();
+			beforeCal.set(Calendar.MONTH, Calendar.DECEMBER);
+			beforeCal.set(Calendar.YEAR, year);
+			beforeCal.set(Calendar.DATE, 31);
+			Date afterDate = afterCal.getTime();
+			Date beforeDate = beforeCal.getTime();
+			System.out.println(afterDate);
+			System.out.println(beforeDate);
 			return new Response(HttpStatus.OK.toString(), "", receipts.findByUserAndDateLessThanEqualAndDateGreaterThanEqual(userData, beforeDate, afterDate));
 		}
 		return new Response(HttpStatus.OK.toString(), "User not found", "");
