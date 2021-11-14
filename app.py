@@ -20,12 +20,14 @@ def endpoint():
     text_arr = text.split('\n')
     # get only dollar amounts from text_arr
     dollar_arr = [x for x in text_arr if re.match(r'\$\d+\.\d{2}', x)]
+    dollar_arr.remove(dollar_arr[7])
     # get only the words with no numbers in them from text_arr
     words_arr = [x for x in text_arr if not re.match(r'\d+', x)]
     words_arr = words_arr[5:28]
+    print(dollar_arr)
     for i in words_arr:
         if i == " " or i == "" or i == "  " or i == None:
-            print(words_arr.remove(i))
+            words_arr.remove(i)
             if i.find('Total') == 1:
                 i = 'Total'
     words_arr.remove(words_arr[5])
@@ -34,20 +36,24 @@ def endpoint():
     words_arr.remove(words_arr[6])  
     words_arr.remove(words_arr[6])  
 
-    date = words_arr[0]
 
-    total = 0
-    for i in dollar_arr:
-        total += float(i[1:])
-    total = sum([float(x.replace('$', '')) for x in dollar_arr])
-    dollar_arr = [float(x.replace('$', '')) for x in dollar_arr]
+    date = words_arr[0]
+    words_arr.pop(0)
+    words_arr.remove('Subtotal')
+    
+        
+    print(words_arr)
+    # if duplicate items in words_arr, then append the quantity to the item
+
 
     items = {}
-    for i in words_arr[1:]:
-        for j in dollar_arr:
-            items[i] = float(j)
-
-
+    print(len(dollar_arr))
+    print(len(words_arr))
+    # puts the items and prices into a dictionary
+    for i in range(len(words_arr)):
+        items[words_arr[i]] = dollar_arr[i]
+    print(items)
+    total = items.pop('Total \u2014')
     return jsonify({'total': total, 'date': date, 'items': items})
 
 
