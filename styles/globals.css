@@ -50,5 +50,13 @@ a {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-items: center;
+  justify-content: space-evenly;
+}
+
+.container {
+  height: 80vh;
+}
+
+.title {
+  font-size: 6em;
 }

@@ -8,9 +8,9 @@ import { Button } from '@mui/material';
 const Home: NextPage = () => {
   return (
     <>
-      <div className="flexcolumn">
+      <div className="flexcolumn container">
         {/* logo */}
-        <div className="title">Welcome to our planner!</div>
+        <div className="title">Spence</div>
         <div className="login_box flexcolumn">
           <TextField id="outlined-basic" label="Username" variant="outlined" />
           <TextField id="outlined-basic" label="Password" variant="outlined" />

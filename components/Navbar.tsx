@@ -18,18 +18,9 @@ export default function SimpleBottomNavigation() {
           setValue(newValue);
         }}
       >
-        {/* <Button color="secondary" variant="contained" href="/">  */}
-            {/* <div>Home</div> */}
             <BottomNavigationAction label="Home" href="/" />
-        {/* </Button> */}
-        {/* <Button href="/reciept"> */}
-            {/* <div>Reciept</div> */}
             <BottomNavigationAction label="Reciept" href="/reciept"/>
-        {/* </Button> */}
-        {/* <Button href="/dashboard"> */}
-            {/* <div>Expenses</div> */}
             <BottomNavigationAction label="Expenses" href="/dashboard" />
-        {/* </Button> */}
       </BottomNavigation>
       </Box>
     </>
