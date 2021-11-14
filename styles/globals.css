@@ -14,3 +14,25 @@ a {
 * {
   box-sizing: border-box;
 }
+
+.navbar {
+  display: grid;
+  display: flex;
+  width: 100vw;
+  position: absolute;
+  bottom: 0;
+}
+
+.MuiBottomNavigationAction-root {
+  width: 25%;
+  color: black;
+  background-color: #ccc;
+}
+
+.MuiBottomNavigationAction-label {
+  font-size: large !important;
+}
+/* selected doesnt transfer over on links so temprarily disabling */
+.Mui-selected {
+  color:black !important;
+}
