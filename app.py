@@ -23,9 +23,11 @@ def endpoint():
     # get only the words with no numbers in them from text_arr
     words_arr = [x for x in text_arr if not re.match(r'\d+', x)]
     words_arr = words_arr[5:28]
+    print(words_arr)
+    print(dollar_arr)
     for i in words_arr:
         if i == " " or i == "" or i == "  " or i == None:
-            print(words_arr.remove(i))
+            words_arr.remove(i)
             if i.find('Total') == 1:
                 i = 'Total'
     words_arr.remove(words_arr[5])
@@ -36,18 +38,15 @@ def endpoint():
 
     date = words_arr[0]
 
-    total = 0
-    for i in dollar_arr:
-        total += float(i[1:])
-    total = sum([float(x.replace('$', '')) for x in dollar_arr])
-    dollar_arr = [float(x.replace('$', '')) for x in dollar_arr]
+        
 
     items = {}
-    for i in words_arr[1:]:
-        for j in dollar_arr:
-            items[i] = float(j)
-
-
+    # puts the items and prices into a dictionary
+    for i in range(len(words_arr) - 1):
+        items[words_arr[i + 1]] = dollar_arr[i]
+    print(items)
+    print(items.pop('Subtotal'))
+    total = items.pop('Total \u2014')
     return jsonify({'total': total, 'date': date, 'items': items})
 
 
