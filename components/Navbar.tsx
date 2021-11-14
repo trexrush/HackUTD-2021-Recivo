@@ -19,7 +19,7 @@ export default function SimpleBottomNavigation() {
         }}
       >
             <BottomNavigationAction label="Home" href="/" />
-            <BottomNavigationAction label="Reciept" href="/reciept"/>
+            {/* <BottomNavigationAction label="Reciept" href="/reciept"/> */}
             <BottomNavigationAction label="Expenses" href="/dashboard" />
       </BottomNavigation>
       </Box>
