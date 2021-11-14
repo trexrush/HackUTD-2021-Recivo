@@ -11,10 +11,9 @@ import lombok.Data;
 public class Receipt {
 	@Id
 	@GeneratedValue (strategy=GenerationType.AUTO)
-	private long receipt_id;
+	private long receiptId;
 	private int total;
-	// What date object to use?
-	// private Date date;
+	private Date date;
 	
 	@ManyToOne
 	@JoinColumn(name="user_id", nullable=false)

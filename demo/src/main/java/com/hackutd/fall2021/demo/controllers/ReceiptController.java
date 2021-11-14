@@ -6,6 +6,7 @@ import com.hackutd.fall2021.demo.entities.*;
 import com.hackutd.fall2021.demo.repositories.*;
 import com.hackutd.fall2021.demo.resources.Response;
 
+import java.util.Date;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,8 +34,18 @@ public class ReceiptController {
 		}
 		return new Response(HttpStatus.OK.toString(), "User not found", "");
 	}
-	@PostMapping("/get")
-	public Response getReceipt(@RequestBody Map<String, String> login) {
-		
+	@GetMapping("/getall")
+	public Response getReceipt(@RequestBody User user) {
+		return new Response(HttpStatus.OK.toString(), "", users.findById(user.getUserId()).get().getReceipts());
+	}
+	@GetMapping("/bymonth/{month}/{year}")
+	public Response getReceipt(@RequestBody User user, @PathVariable Integer month, @PathVariable Integer year) {
+		User userData = users.findById(user.getUserId()).get();
+		if (userData != null) {
+			Date beforeDate = new Date(year, month, 1);
+			Date afterDate = new Date(year, month, 31);
+			receipts.findByUserAndDateGreaterAndDateLess(userData, afterDate, beforeDate);
+		}
+		return new Response(HttpStatus.OK.toString(), "User not found", "");
 	}
 }

@@ -11,7 +11,7 @@ import lombok.Data;
 public class Item {
 	@Id
 	@GeneratedValue (strategy=GenerationType.AUTO)
-	private long item_id;
+	private long itemId;
 	private int price;
 	private boolean isTaxable;
 	
