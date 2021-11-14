@@ -1,6 +1,8 @@
 package com.hackutd.fall2021.demo.entities;
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.util.*;
 
 import lombok.Data;
@@ -13,6 +15,7 @@ public class Receipt {
 	@GeneratedValue (strategy=GenerationType.AUTO)
 	private long receiptId;
 	private int total;
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
 	private Date date;
 	
 	@ManyToOne

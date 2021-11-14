@@ -51,7 +51,7 @@ public class ReceiptController {
 		if (userData != null) {
 			Date beforeDate = new Date(year, month, 1);
 			Date afterDate = new Date(year, month, 31);
-			receipts.findByUserAndDateGreaterAndDateLess(userData, afterDate, beforeDate);
+			receipts.findByUserAndDateGreaterThanAndDateLessThan(userData, afterDate, beforeDate);
 		}
 		return new Response(HttpStatus.OK.toString(), "User not found", "");
 	}

@@ -20,12 +20,12 @@ public class UserController {
 	
 	@PostMapping ("/new")
 	public Response createUser(@RequestBody User newUser) {
-		if (repository.findByUsername(newUser.getUsername()) != null) {
+		if (repository.findByUsername(newUser.getUsername()) == null) {
 			return new Response(HttpStatus.OK.toString(), "", repository.save(newUser));
 		}
 		return new Response(HttpStatus.OK.toString(), "User already exists", "");
 	}
-	@PostMapping("/login")
+	@GetMapping("/login")
 	public Response login(@RequestBody Map<String, String> login) {
 		User user = repository.findByUsernameAndPassword(login.get("username"), login.get("password"));
 		return new Response(HttpStatus.OK.toString(), user == null ? "User not found" : "User found", user);
