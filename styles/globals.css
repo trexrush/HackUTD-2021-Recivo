@@ -32,7 +32,23 @@ a {
 .MuiBottomNavigationAction-label {
   font-size: large !important;
 }
+
 /* selected doesnt transfer over on links so temprarily disabling */
 .Mui-selected {
   color:black !important;
+}
+
+.login_box {
+  width: 275px;
+  height: 350px;
+  /* border: 2px #ddd solid; */
+  background-color: #ddd;
+  justify-content: space-evenly !important;
+}
+
+.flexcolumn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-items: center;
 }
