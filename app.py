@@ -16,9 +16,39 @@ def endpoint():
     receipt = request.files['image']
     # save the image to disk
     receipt.save(f'images/{receipt.filename}')
-    text = pytesseract.image_to_string(Image.open(f'images/{receipt.filename}'))
-    # return a response
-    return jsonify({'message': 'Image received. Check /images/receipt.jpg for your receipt.'})
-# TODO: implement receipt parsing, sort stringified receipt into dictionary with keys: date, price, quantity, and total
+    text = pytesseract.image_to_string(f'images/{receipt.filename}')
+    text_arr = text.split('\n')
+    # get only dollar amounts from text_arr
+    dollar_arr = [x for x in text_arr if re.match(r'\$\d+\.\d{2}', x)]
+    # get only the words with no numbers in them from text_arr
+    words_arr = [x for x in text_arr if not re.match(r'\d+', x)]
+    words_arr = words_arr[5:28]
+    for i in words_arr:
+        if i == " " or i == "" or i == "  " or i == None:
+            print(words_arr.remove(i))
+            if i.find('Total') == 1:
+                i = 'Total'
+    words_arr.remove(words_arr[5])
+    words_arr.remove(words_arr[5])     
+    words_arr.remove(words_arr[6])  
+    words_arr.remove(words_arr[6])  
+    words_arr.remove(words_arr[6])  
+
+    date = words_arr[0]
+
+    total = 0
+    for i in dollar_arr:
+        total += float(i[1:])
+    total = sum([float(x.replace('$', '')) for x in dollar_arr])
+    dollar_arr = [float(x.replace('$', '')) for x in dollar_arr]
+
+    items = {}
+    for i in words_arr[1:]:
+        for j in dollar_arr:
+            items[i] = float(j)
+
+
+    return jsonify({'total': total, 'date': date, 'items': items})
+
 
 
