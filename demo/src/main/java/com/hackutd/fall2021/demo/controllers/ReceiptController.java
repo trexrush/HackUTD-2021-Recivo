@@ -13,15 +13,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 
 @RestController
-@RequestMapping ("/api/receipt")
+@RequestMapping("/api/receipt")
 
 public class ReceiptController {
 	@Autowired
 	private UserRepository users;
 	@Autowired
 	private ReceiptRepository receipts;
+	@Autowired
+	private ItemRepository items;
 	
-	@PostMapping ("/add/{id}")
+	@PostMapping("/add/{id}")
 	public Response addReceipt(@RequestBody Receipt newReceipt, @PathVariable Long id) {
 		User user = users.findById(id).get();
 		if (user != null) {
@@ -29,6 +31,11 @@ public class ReceiptController {
 			receipts.save(newReceipt);
 			user.addReceipt(newReceipt);
 			users.save(user);
+			// CHECK
+			for (Item it: newReceipt.getItems()) {
+				it.setReceipt(newReceipt);
+				items.save(it);
+			}
 			
 			return new Response(HttpStatus.OK.toString(), "Saved receipt", "");
 		}

@@ -12,14 +12,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 
 @RestController
-@RequestMapping ("/api/item")
+@RequestMapping("/api/item")
 
 public class ItemController {
+	
 	@Autowired
 	private ItemRepository repository;
-	
-	@PostMapping ("/new")
-	public Response addItem(@RequestBody User newUser) {
+	/*
+	@PostMapping("/new/")
+	public Response addItem(@RequestBody ) {
 		if (repository.findByUsername(newUser.getUsername()) != null) {
 			return new Response(HttpStatus.OK.toString(), "", repository.save(newUser));
 		}
@@ -30,4 +31,5 @@ public class ItemController {
 		User user = repository.findByUsernameAndPassword(login.get("username"), login.get("password"));
 		return new Response(HttpStatus.OK.toString(), user == null ? "User not found" : "User found", user);
 	}
+	*/
 }

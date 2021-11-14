@@ -16,7 +16,7 @@ public class Receipt {
 	private Date date;
 	
 	@ManyToOne
-	@JoinColumn(name="user_id", nullable=false)
+	@JoinColumn(name="user_id")
 	private User user;
 	
 	@OneToMany(mappedBy="receipt")
