@@ -10,10 +10,11 @@ import lombok.Data;
 
 public class Item {
 	@Id
-	@GeneratedValue (strategy=GenerationType.AUTO)
+	@GeneratedValue (strategy=GenerationType.IDENTITY)
 	private long itemId;
 	private int price;
 	private boolean isTaxable;
+	private String name;
 	
 	@ManyToOne
 	@JoinColumn(name="receipt_id", nullable=false)

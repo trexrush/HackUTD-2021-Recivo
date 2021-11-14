@@ -12,7 +12,7 @@ import lombok.Data;
 
 public class Receipt {
 	@Id
-	@GeneratedValue (strategy=GenerationType.AUTO)
+	@GeneratedValue (strategy=GenerationType.IDENTITY)
 	private long receiptId;
 	private int total;
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
