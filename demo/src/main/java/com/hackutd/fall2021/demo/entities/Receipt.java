@@ -1,10 +1,8 @@
 package com.hackutd.fall2021.demo.entities;
 import javax.persistence.*;
-
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import java.util.*;
-
 import lombok.Data;
 
 @Data
