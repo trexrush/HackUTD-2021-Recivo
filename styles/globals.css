@@ -4,6 +4,7 @@ body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  overflow: scroll;
 }
 
 a {
@@ -16,10 +17,10 @@ a {
 }
 
 .navbar {
-  display: grid;
+  /* display: grid; */
   display: flex;
   width: 100vw;
-  position: absolute;
+  position: fixed;
   bottom: 0;
 }
 
