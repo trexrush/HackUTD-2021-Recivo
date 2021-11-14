@@ -26,8 +26,9 @@ public class ReceiptController {
 	
 	@PostMapping("/add/{id}")
 	public void addReceipt(@RequestBody Receipt newReceipt, @PathVariable Long id) {
-		User user = users.findById(id).get();
-		if (user != null) {
+		Optional<User> userOpt = users.findById(id);
+		if (userOpt.isPresent()) {
+			User user = userOpt.get();
 			newReceipt.getDate().setDate(newReceipt.getDate().getDate() + 1);
 			newReceipt.setUser(user);
 			receipts.save(newReceipt);
@@ -46,12 +47,17 @@ public class ReceiptController {
 	}
 	@GetMapping("/getall")
 	public Response getReceipt(@RequestBody User user) {
-		return new Response(HttpStatus.OK.toString(), "", users.findById(user.getUserId()).get().getReceipts());
+		Optional<User> userOpt = users.findById(user.getUserId());
+		if (userOpt.isPresent()) {
+			return new Response(HttpStatus.OK.toString(), "", users.findById(user.getUserId()).get().getReceipts());
+		}
+		return new Response(HttpStatus.OK.toString(), "User not found", "");
 	}
 	@GetMapping("/bymonth/{month}/{year}")
-	public Response getReceipt(@RequestBody User user, @PathVariable Integer month, @PathVariable Integer year) {
-		User userData = users.findById(user.getUserId()).get();
-		if (userData != null) {
+	public Response getReceipt(@RequestBody User userInfo, @PathVariable Integer month, @PathVariable Integer year) {
+		Optional<User> userOpt = users.findById(userInfo.getUserId());
+		if (userOpt.isPresent()) {
+			User userData = userOpt.get();
 			Calendar afterCal = Calendar.getInstance();
 			afterCal.clear();
 			afterCal.set(Calendar.MONTH, month - 1);
@@ -71,9 +77,10 @@ public class ReceiptController {
 		return new Response(HttpStatus.OK.toString(), "User not found", "");
 	}
 	@GetMapping("/byyear/{year}")
-	public Response getReceipt(@RequestBody User user, @PathVariable Integer year) {
-		User userData = users.findById(user.getUserId()).get();
-		if (userData != null) {
+	public Response getReceipt(@RequestBody User userInfo, @PathVariable Integer year) {
+		Optional<User> userOpt = users.findById(userInfo.getUserId());
+		if (userOpt.isPresent()) {
+			User userData = userOpt.get();
 			Calendar afterCal = Calendar.getInstance();
 			afterCal.clear();
 			afterCal.set(Calendar.MONTH, Calendar.JANUARY);
