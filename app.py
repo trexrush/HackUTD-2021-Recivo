@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, jsonify, Response
+from flask import Flask, render_template, request, redirect, jsonify, Response, json
 import pytesseract
 import re
 from PIL import Image
@@ -54,8 +54,8 @@ def endpoint():
         items[words_arr[i]] = dollar_arr[i]
     print(items)
     total = items.pop('Total \u2014')
-    # return items as json
-    return jsonify(items)
+    actual = {'total': total, 'date': date, 'items': items}
+    return request.post(json.dumps(actual), mimetype='application/json')
 
 
 
