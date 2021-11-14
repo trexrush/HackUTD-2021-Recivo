@@ -1,6 +1,8 @@
 package com.hackutd.fall2021.demo.entities;
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.util.*;
 
 import lombok.Data;
@@ -16,6 +18,7 @@ public class Item {
 	private boolean isTaxable;
 	private String name;
 	
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name="receipt_id", nullable=false)
 	private Receipt receipt;

@@ -11,5 +11,5 @@ import java.util.*;
 @Repository 
 
 public interface ReceiptRepository extends CrudRepository<Receipt, Long> {
-	List<Receipt> findByUserAndDateGreaterThanAndDateLessThan(User user, Date after, Date before);
+	List<Receipt> findByUserAndDateLessThanEqualAndDateGreaterThanEqual(User user, Date after, Date before);
 }

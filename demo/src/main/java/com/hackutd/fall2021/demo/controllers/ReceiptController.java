@@ -6,8 +6,7 @@ import com.hackutd.fall2021.demo.entities.*;
 import com.hackutd.fall2021.demo.repositories.*;
 import com.hackutd.fall2021.demo.resources.Response;
 
-import java.util.Date;
-import java.util.Map;
+import java.util.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -24,7 +23,7 @@ public class ReceiptController {
 	private ItemRepository items;
 	
 	@PostMapping("/add/{id}")
-	public Response addReceipt(@RequestBody Receipt newReceipt, @PathVariable Long id) {
+	public void addReceipt(@RequestBody Receipt newReceipt, @PathVariable Long id) {
 		User user = users.findById(id).get();
 		if (user != null) {
 			newReceipt.setUser(user);
@@ -36,10 +35,7 @@ public class ReceiptController {
 				it.setReceipt(newReceipt);
 				items.save(it);
 			}
-			
-			return new Response(HttpStatus.OK.toString(), "Saved receipt", "");
 		}
-		return new Response(HttpStatus.OK.toString(), "User not found", "");
 	}
 	@GetMapping("/getall")
 	public Response getReceipt(@RequestBody User user) {
@@ -49,9 +45,19 @@ public class ReceiptController {
 	public Response getReceipt(@RequestBody User user, @PathVariable Integer month, @PathVariable Integer year) {
 		User userData = users.findById(user.getUserId()).get();
 		if (userData != null) {
-			Date beforeDate = new Date(year, month, 1);
-			Date afterDate = new Date(year, month, 31);
-			receipts.findByUserAndDateGreaterThanAndDateLessThan(userData, afterDate, beforeDate);
+			Calendar afterCal = Calendar.getInstance();
+			afterCal.clear();
+			afterCal.set(Calendar.MONTH, month - 1);
+			afterCal.set(Calendar.YEAR, year);
+			afterCal.set(Calendar.DATE, 1);
+			Calendar beforeCal = Calendar.getInstance();
+			beforeCal.clear();
+			beforeCal.set(Calendar.MONTH, month - 1);
+			beforeCal.set(Calendar.YEAR, year);
+			beforeCal.set(Calendar.DATE, 31);
+			Date afterDate = afterCal.getTime();
+			Date beforeDate = beforeCal.getTime();
+			return new Response(HttpStatus.OK.toString(), "", receipts.findByUserAndDateLessThanEqualAndDateGreaterThanEqual(userData, beforeDate, afterDate));
 		}
 		return new Response(HttpStatus.OK.toString(), "User not found", "");
 	}
